@@ -12,7 +12,7 @@
     <name>Terracotta</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>14</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -62,10 +62,6 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>mccommandapi</id>
-            <url>https://raw.githubusercontent.com/JorelAli/1.13-Command-API/mvn-repo/1.13CommandAPI/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -74,11 +70,6 @@
             <artifactId>paper-api</artifactId>
             <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.jorel</groupId>
-            <artifactId>commandapi-core</artifactId>
-            <version>3.4</version>
         </dependency>
     </dependencies>
 </project>

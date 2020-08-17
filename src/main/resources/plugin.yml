@@ -2,3 +2,8 @@ name: Terracotta
 version: ${project.version}
 main: com.bermudalocket.terracotta.Terracotta
 api-version: 1.16
+commands:
+  terrabutcher:
+    permission: LT.admin
+  terracounter:
+    permission: LT.admin

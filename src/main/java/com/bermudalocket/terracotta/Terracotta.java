@@ -9,8 +9,8 @@ public class Terracotta extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        ButcherCommand.register();
-        EntityCountCommand.register();
+        this.getCommand("terrabutcher").setExecutor(ButcherCommand.INSTANCE);
+        this.getCommand("terracounter").setExecutor(EntityCountCommand.INSTANCE);
     }
 
     public static int getViewDistance() {

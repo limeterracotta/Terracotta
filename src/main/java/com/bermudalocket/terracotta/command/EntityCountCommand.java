@@ -1,36 +1,48 @@
 package com.bermudalocket.terracotta.command;
 
 import com.bermudalocket.terracotta.Terracotta;
-import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.CommandPermission;
-import dev.jorel.commandapi.arguments.Argument;
-import dev.jorel.commandapi.arguments.EntityTypeArgument;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 
-import java.util.LinkedHashMap;
+public class EntityCountCommand implements CommandExecutor {
 
-public class EntityCountCommand {
+    public static final EntityCountCommand INSTANCE = new EntityCountCommand();
 
     private EntityCountCommand() { }
 
-    public static void register() {
-        var argsMap = new LinkedHashMap<String, Argument>();
-        argsMap.put("entity-type", new EntityTypeArgument());
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (sender instanceof Player player) {
+            EntityType type = null;
+            for (int i = 0; i < args.length - 1; i++) {
+                if (args[i].equalsIgnoreCase("-e")) {
+                    try {
+                        type = EntityType.valueOf(args[i+1]);
+                    } catch (Exception e) {
+                        player.sendMessage(ChatColor.RED + "Not a valid entity type: " + args[i+1]);
+                    }
+                }
+            }
+            if (type == null) {
+                player.sendMessage(ChatColor.RED + "You must supply an EntityType, e.g. -e IRON_GOLEM.");
+                return true;
+            }
 
-        new CommandAPICommand("ec")
-            .withPermission(CommandPermission.fromString("LT.admin"))
-            .withArguments(argsMap)
-            .executesPlayer((player, args) -> {
-                var type = (EntityType) args[0];
-                var r = Terracotta.getViewDistance();
-                var count = Bukkit.getOnlinePlayers()
-                      .stream()
-                      .flatMap(p -> p.getNearbyEntities(r, r, r).stream().filter(e -> e.getType() == type))
-                      .count();
-                player.sendMessage("[Terracotta] Found " + count + " " + type.toString());
-            })
-            .register();
+            final var entityType = type;
+            var r = Terracotta.getViewDistance();
+            var count = Bukkit.getOnlinePlayers()
+                              .stream()
+                              .flatMap(p -> p.getNearbyEntities(r, r, r).stream().filter(e -> e.getType() == entityType))
+                              .count();
+            player.sendMessage(ChatColor.GRAY + "Found " + count + " " + type.toString() + "s.");
+
+        }
+        return true;
     }
 
 }
