@@ -111,6 +111,14 @@
             <name>jcenter</name>
             <url>https://jcenter.bintray.com/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>okkero</id>
+            <url>http://nexus.okkero.com/repository/maven-releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -129,6 +137,17 @@
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-collections-immutable-jvm</artifactId>
             <version>0.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.DevSrSouza</groupId>
+            <artifactId>KotlinBukkitAPI</artifactId>
+            <version>b3347abfc1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bstats</groupId>
+                    <artifactId>bstats-bukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
